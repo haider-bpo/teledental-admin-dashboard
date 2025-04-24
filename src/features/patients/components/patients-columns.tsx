@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { HighlightMatch } from '@/components/table/HighlightMatch';
 import { Badge } from '@/components/ui/badge';
-import { Patient } from '@/types/patient';
+import { Patient } from '../types';
 
 export const patientsColumns: ColumnDef<Patient>[] = [
   {

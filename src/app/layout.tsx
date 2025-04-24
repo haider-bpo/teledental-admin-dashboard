@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
-import { ThemeProvider } from '@/providers/theme-provider';
+import { Providers } from '@/providers';
 import NextTopLoader from 'nextjs-toploader';
 import DashboardLayout from './(dashboard)/dashboard-layout';
 
@@ -33,12 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
+        <Providers>
           <NextTopLoader
             color="#2299DD"
             initialPosition={0.08}
@@ -53,7 +48,7 @@ export default function RootLayout({
             showAtBottom={false}
           />
           <DashboardLayout>{children}</DashboardLayout>
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

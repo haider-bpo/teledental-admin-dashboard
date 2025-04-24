@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import { Row } from '@tanstack/react-table';
 import { DataTable } from '@/components/table/DataTable';
-import { Dentist } from '@/types/dentist';
 import { dentistsColumns } from './dentists-columns';
+import { Dentist } from '../types';
 
 // Dummy data
 const dummyDentists: Dentist[] = [
