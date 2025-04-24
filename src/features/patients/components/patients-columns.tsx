@@ -35,33 +35,7 @@ export const patientsColumns: ColumnDef<Patient>[] = [
     header: 'Location',
     cell: ({ row }) => {
       const loc = row.original.location;
-      return `${loc.city}, ${loc.state}`;
-    },
-    enableSorting: true,
-  },
-  {
-    accessorKey: 'gender',
-    header: 'Gender',
-    cell: ({ row }) => {
-      const gender = row.original.gender;
-      return gender.charAt(0).toUpperCase() + gender.slice(1);
-    },
-    enableSorting: true,
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      const status = row.original.status;
-      return (
-        <Badge
-          variant={
-            status === 'active' ? 'default' : status === 'inactive' ? 'secondary' : 'destructive'
-          }
-        >
-          {status.charAt(0).toUpperCase() + status.slice(1)}
-        </Badge>
-      );
+      return loc.address || '-';
     },
     enableSorting: true,
   },
@@ -74,6 +48,15 @@ export const patientsColumns: ColumnDef<Patient>[] = [
       ) : (
         <Badge variant="secondary">Pending</Badge>
       );
+    },
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'createdAt',
+    header: 'Signed Up',
+    cell: ({ row }) => {
+      const date = new Date(row.original.createdAt);
+      return date.toLocaleDateString();
     },
     enableSorting: true,
   },
