@@ -1,5 +1,5 @@
 export type Dentist = {
-  id: string;
+  _id: string;
   firstName: string;
   lastName: string;
   businessName: string;

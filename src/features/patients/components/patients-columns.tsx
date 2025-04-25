@@ -51,13 +51,4 @@ export const patientsColumns: ColumnDef<Patient>[] = [
     },
     enableSorting: true,
   },
-  {
-    accessorKey: 'createdAt',
-    header: 'Signed Up',
-    cell: ({ row }) => {
-      const date = new Date(row.original.createdAt);
-      return date.toLocaleDateString();
-    },
-    enableSorting: true,
-  },
 ];

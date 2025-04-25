@@ -2,6 +2,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { HighlightMatch } from '@/components/table/HighlightMatch';
 import { Badge } from '@/components/ui/badge';
 import { Dentist } from '../types';
+import ApprovalStatusCell from './approval-status-cell';
 
 export const dentistsColumns: ColumnDef<Dentist>[] = [
   {
@@ -45,51 +46,39 @@ export const dentistsColumns: ColumnDef<Dentist>[] = [
     },
     enableSorting: true,
   },
-  {
-    accessorKey: 'specialities',
-    header: 'Specialties',
-    cell: ({ row }) => {
-      const specialties = row.original.specialities;
-      return (
-        <div className="flex flex-wrap gap-1">
-          {specialties.slice(0, 2).map((specialty, index) => (
-            <Badge key={index} variant="secondary">
-              {specialty}
-            </Badge>
-          ))}
-          {specialties.length > 2 && (
-            <Badge variant="outline">+{specialties.length - 2} more</Badge>
-          )}
-        </div>
-      );
-    },
-    enableSorting: true,
-  },
+  // {
+  //   accessorKey: 'specialities',
+  //   header: 'Specialties',
+  //   cell: ({ row }) => {
+  //     const specialties = row.original?.specialities;
+  //     return (
+  //       <div className="flex flex-wrap gap-1">
+  //         {specialties?.slice(0, 2).map((specialty, index) => (
+  //           <Badge key={index} variant="secondary">
+  //             {specialty}
+  //           </Badge>
+  //         ))}
+  //         {specialties?.length > 2 && (
+  //           <Badge variant="outline">+{specialties.length - 2} more</Badge>
+  //         )}
+  //       </div>
+  //     );
+  //   },
+  //   enableSorting: true,
+  // },
   {
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => {
-      const status = row.original.status;
+      const status = row.original?.status;
       return (
         <Badge
           variant={
             status === 'active' ? 'default' : status === 'inactive' ? 'secondary' : 'destructive'
           }
         >
-          {status.charAt(0).toUpperCase() + status.slice(1)}
+          {status?.charAt(0).toUpperCase() + status?.slice(1)}
         </Badge>
-      );
-    },
-    enableSorting: true,
-  },
-  {
-    accessorKey: 'isApproved',
-    header: 'Approval',
-    cell: ({ row }) => {
-      return row.original.isApproved ? (
-        <Badge variant="default">Approved</Badge>
-      ) : (
-        <Badge variant="secondary">Pending</Badge>
       );
     },
     enableSorting: true,
@@ -104,6 +93,12 @@ export const dentistsColumns: ColumnDef<Dentist>[] = [
         <Badge variant="secondary">Pending</Badge>
       );
     },
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'isApproved',
+    header: 'Approval',
+    cell: ({ row }) => <ApprovalStatusCell dentist={row.original} />,
     enableSorting: true,
   },
 ];

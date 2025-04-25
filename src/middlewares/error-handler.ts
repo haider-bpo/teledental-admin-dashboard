@@ -1,12 +1,13 @@
 import { errorResponse } from '@/lib/responses';
 import { NextRequest } from 'next/server';
 import { ZodError } from 'zod';
+import { Middleware, RouteHandler } from '@/types/route-handler';
 
-export const errorHandler = (handler: (req: NextRequest) => Promise<Response>) => {
-  return async (req: NextRequest): Promise<Response> => {
+export const errorHandler: Middleware = (handler: RouteHandler) => {
+  return async (req: NextRequest, context) => {
     try {
-      return await handler(req);
-    } catch (err: any) {
+      return await handler(req, context);
+    } catch (err: unknown) {
       console.error('[ERROR]', err);
 
       // Handle Zod validation errors
@@ -19,8 +20,11 @@ export const errorHandler = (handler: (req: NextRequest) => Promise<Response>) =
       }
 
       // Handle known error with status/message
-      if (err.status && err.message) {
-        return errorResponse(err.message, err.status);
+      if (err && typeof err === 'object' && 'status' in err && 'message' in err) {
+        return errorResponse(
+          (err as { message: string }).message,
+          (err as { status: number }).status,
+        );
       }
 
       // Default fallback
