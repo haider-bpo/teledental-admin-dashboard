@@ -1,24 +1,19 @@
-import { successResponse } from '@/lib/responses';
-import { withDB } from '@/middlewares/db';
-import { errorHandler } from '@/middlewares/error-handler';
-import { middlewaresHandler } from '@/middlewares/middlewares-handler';
+import ApiResponse from '@/lib/middlewares/api-response';
+import requestHandler from '@/lib/middlewares/request-handler';
 import { DentistService } from '@/services/dentist.service';
-import { RouteHandler } from '@/types/route-handler';
+import { NextApiRequest, NextApiResponse } from 'next';
+import ApiError from '@/lib/middlewares/api-error';
 
-const updateDentist: RouteHandler = async (req, { params }) => {
-  const body = await req.json();
-  const id = params.id;
-  const updatedData = body;
+const getAllDentists = requestHandler.get(async (req: NextApiRequest, res: NextApiResponse) => {
+  const { id } = req.query;
+  const updatedData = req.body;
 
   if (!id) {
-    throw new Error('Dentist ID is required');
+    throw new ApiError('Dentist ID is required', 404);
   }
 
-  console.log('Updating dentist with ID:', id, 'with data:', updatedData);
   const updatedDentist = await DentistService.updateDentist(id, updatedData);
-  console.log('Update result:', updatedDentist);
+  return res.json(new ApiResponse(updatedDentist, 'Dentist updated successfully'));
+});
 
-  return successResponse(updatedDentist, 'Dentist updated successfully', 200);
-};
-
-export const PATCH = middlewaresHandler(errorHandler, withDB)(updateDentist);
+export default getAllDentists;

@@ -1,14 +1,11 @@
-import { successResponse } from '@/lib/responses';
-import { withDB } from '@/middlewares/db';
-import { errorHandler } from '@/middlewares/error-handler';
-import { middlewaresHandler } from '@/middlewares/middlewares-handler';
+import ApiResponse from '@/lib/middlewares/api-response';
+import requestHandler from '@/lib/middlewares/request-handler';
 import { DentistService } from '@/services/dentist.service';
-import { NextRequest } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-const getAllDentists = async (req: NextRequest): Promise<Response> => {
-  const patients = await DentistService.getAllDentists();
+const getAllDentists = requestHandler.get(async (req: NextApiRequest, res: NextApiResponse) => {
+  const dentists = await DentistService.getAllDentists();
+  return res.json(new ApiResponse(dentists, 'Dentists fetched successfully'));
+});
 
-  return successResponse(patients, 'Dentists fetched successfully', 200);
-};
-
-export const GET = middlewaresHandler(errorHandler, withDB)(getAllDentists);
+export default getAllDentists;
