@@ -7,11 +7,11 @@ import { DentistService } from '@/services/dentist.service';
 import { RouteHandler } from '@/types/route-handler';
 import { isEmptyBody } from '@/utils/validation';
 import { isValidObjectId } from 'mongoose';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-const updateDentist: RouteHandler = async (req, { params, body }) => {
-  const id = params.id;
-  const updatedData = body;
+const updateDentist: RouteHandler = async (req, context) => {
+  const id = context.params.id;
+  const updatedData = context.body;
 
   // Validate required fields
   if (!id) {
@@ -24,7 +24,7 @@ const updateDentist: RouteHandler = async (req, { params, body }) => {
   }
 
   // Validate body exists and isn't empty
-  if (isEmptyBody(body)) {
+  if (isEmptyBody(updatedData)) {
     throw ApiError.badRequest('Noting Changed');
   }
 
