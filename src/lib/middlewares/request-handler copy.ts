@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import errorHandler from './error-handler';
 import connectWithDB from './connect-with-db';
 
-const requestHandler = nextConnect<NextApiRequest, NextApiResponse>({ onError: errorHandler })
+const router = nextConnect<NextApiRequest, NextApiResponse>({ onError: errorHandler })
   .use(helmet()) // Adds security headers
   .use(
     rateLimit({
@@ -17,4 +17,4 @@ const requestHandler = nextConnect<NextApiRequest, NextApiResponse>({ onError: e
   .use(connectWithDB)
   .use(authenticate); // authenticate each request
 
-export default requestHandler;
+export default router;

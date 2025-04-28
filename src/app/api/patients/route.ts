@@ -1,11 +1,11 @@
 import ApiResponse from '@/lib/middlewares/api-response';
-import requestHandler from '@/lib/middlewares/request-handler';
+import router from '@/lib/router';
 import { PatientService } from '@/services/patient.service';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const getAllPatients = requestHandler.get(async (req: NextApiRequest, res: NextApiResponse) => {
+export const GET = router.get(async (req: NextApiRequest, res: NextApiResponse) => {
   const patients = await PatientService.getAllPatients();
   return res.json(new ApiResponse(patients, 'Patients fetched successfully'));
 });
 
-export default getAllPatients;
+// export default getAllPatients;

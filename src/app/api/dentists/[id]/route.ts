@@ -1,10 +1,10 @@
 import ApiResponse from '@/lib/middlewares/api-response';
-import requestHandler from '@/lib/middlewares/request-handler';
+import router from '@/lib/router';
 import { DentistService } from '@/services/dentist.service';
 import { NextApiRequest, NextApiResponse } from 'next';
 import ApiError from '@/lib/middlewares/api-error';
 
-const getAllDentists = requestHandler.get(async (req: NextApiRequest, res: NextApiResponse) => {
+const getAllDentists = router.get(async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   const updatedData = req.body;
 
