@@ -1,16 +1,16 @@
 import { connectDB } from '@/lib/connectDB';
-import { errorResponse } from '@/lib/responses';
 import { NextRequest } from 'next/server';
 import { Middleware, RouteHandler } from '@/types/route-handler';
+import { handleError } from './handle-error';
 
-export const withDB: Middleware = (handler: RouteHandler) => {
+export const connectWithDB: Middleware = (handler: RouteHandler) => {
   return async (req: NextRequest, context) => {
     try {
       await connectDB();
       return await handler(req, context);
     } catch (error) {
-      console.error('[withDB]', error);
-      return errorResponse('Database connection error', 500);
+      console.error('[connectWithDB]', error);
+      return handleError(error);
     }
   };
 };

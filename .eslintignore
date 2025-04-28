@@ -1,0 +1,25 @@
+# .eslintignore
+
+# Layout
+src/components/layout/app-sidebar.tsx
+
+# Table
+src/components/table/DataTable.tsx
+src/components/table/TableFilters.tsx
+src/components/table/TableSkeleton.tsx
+src/components/table/types.ts
+
+# Libs
+src/lib/api-error.ts
+src/lib/api-response.ts
+
+# Middlewares
+src/middlewares/authenticate.ts
+src/middlewares/handle-error.ts
+src/middlewares/parse-json.ts
+
+# Types
+src/types/route-handler.ts
+
+# Utils
+src/utils/validation.ts

@@ -1,14 +1,14 @@
-import { successResponse } from '@/lib/responses';
-import { withDB } from '@/middlewares/db';
-import { errorHandler } from '@/middlewares/error-handler';
+import ApiResponse from '@/lib/api-response';
+import { connectWithDB } from '@/middlewares/connect-with-db';
 import { middlewaresHandler } from '@/middlewares/middlewares-handler';
 import { DentistService } from '@/services/dentist.service';
-import { NextRequest } from 'next/server';
+import { RouteHandler } from '@/types/route-handler';
+import { NextResponse } from 'next/server';
 
-const getAllDentists = async (req: NextRequest): Promise<Response> => {
+const getAllDentists: RouteHandler = async () => {
   const patients = await DentistService.getAllDentists();
 
-  return successResponse(patients, 'Dentists fetched successfully', 200);
+  return NextResponse.json(new ApiResponse(patients, 'Dentists fetched successfully'));
 };
 
-export const GET = middlewaresHandler(errorHandler, withDB)(getAllDentists);
+export const GET = middlewaresHandler(connectWithDB)(getAllDentists);
