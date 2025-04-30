@@ -14,12 +14,12 @@ export const handleError = (error: any) => {
   // Handle ZodError for validation
   if (error.name === 'ZodError') {
     const errors = error.flatten();
-    const message = Object.entries(errors.fieldErrors)
-      .map(([field, errors]) => `${field}: ${errors?.join(', ')}`)
-      .join('; ');
+    // const message = Object.entries(errors.fieldErrors)
+    //   .map(([field, errors]) => `${field}: ${errors?.join(', ')}`)
+    //   .join('; ');
 
     return NextResponse.json(
-      { success: false, message: message || 'Validation failed' },
+      { success: false, message: errors || 'Validation failed' },
       { status: 400 },
     );
   }

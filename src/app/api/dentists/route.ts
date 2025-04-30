@@ -1,14 +1,17 @@
 import ApiResponse from '@/lib/api-response';
-import { connectWithDB } from '@/middlewares/connect-with-db';
-import { middlewaresHandler } from '@/middlewares/middlewares-handler';
+import { connectDB } from '@/lib/connectDB';
+import { handleError } from '@/middlewares/handle-error';
 import { DentistService } from '@/services/dentist.service';
-import { RouteHandler } from '@/types/route-handler';
 import { NextResponse } from 'next/server';
 
-const getAllDentists: RouteHandler = async () => {
-  const patients = await DentistService.getAllDentists();
+const getAllDentists = async () => {
+  try {
+    await connectDB();
+    const patients = await DentistService.getAllDentists();
 
-  return NextResponse.json(new ApiResponse(patients, 'Dentists fetched successfully'));
+    return NextResponse.json(new ApiResponse(patients, 'Dentists fetched successfully'));
+  } catch (error) {
+    handleError(error);
+  }
 };
-
-export const GET = middlewaresHandler(connectWithDB)(getAllDentists);
+export const GET = getAllDentists;

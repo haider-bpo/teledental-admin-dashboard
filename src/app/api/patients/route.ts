@@ -1,15 +1,20 @@
 import ApiResponse from '@/lib/api-response';
-import { connectWithDB } from '@/middlewares/connect-with-db';
-import { middlewaresHandler } from '@/middlewares/middlewares-handler';
+import { connectDB } from '@/lib/connectDB';
+import { handleError } from '@/middlewares/handle-error';
 import { PatientService } from '@/services/patient.service';
-import { RouteHandler } from '@/types/route-handler';
 import { NextResponse } from 'next/server';
 
-const getAllPatients: RouteHandler = async () => {
-  const patients = await PatientService.getAllPatients();
-  const apiResponse = new ApiResponse(patients, 'Patients fetched successfully');
+const getAllPatients = async () => {
+  try {
+    await connectDB();
 
-  return NextResponse.json(apiResponse, { status: apiResponse.statusCode });
+    const patients = await PatientService.getAllPatients();
+    const apiResponse = new ApiResponse(patients, 'Patients fetched successfully');
+
+    return NextResponse.json(apiResponse, { status: apiResponse.statusCode });
+  } catch (error) {
+    handleError(error);
+  }
 };
 
-export const GET = middlewaresHandler(connectWithDB)(getAllPatients);
+export const GET = getAllPatients;
