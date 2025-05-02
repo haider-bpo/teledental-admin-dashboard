@@ -4,6 +4,7 @@ import './globals.css';
 import { Providers } from '@/providers';
 import NextTopLoader from 'nextjs-toploader';
 import DashboardLayout from './dashboard/layout';
+import { Toaster } from 'sonner';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -48,6 +49,7 @@ export default function RootLayout({
             showAtBottom={false}
           />
           {children}
+          <Toaster />
         </Providers>
       </body>
     </html>

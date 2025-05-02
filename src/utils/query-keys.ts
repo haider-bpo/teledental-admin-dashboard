@@ -1,4 +1,5 @@
 export const queryKeys = {
+  auth: ['auth'],
   patients: ['patients'],
   patient: (id: string) => ['patient', id],
   dentists: ['dentists'],

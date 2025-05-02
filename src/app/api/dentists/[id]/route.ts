@@ -11,9 +11,6 @@ const updateDentist: HandlerFn = async (req, context) => {
   const { id } = context.params;
   const updatedData = context.body;
 
-  console.log('id', id);
-  console.log('updatedData', updatedData);
-
   // Validate required fields
   if (!id) {
     throw ApiError.badRequest('Dentist ID is required');
