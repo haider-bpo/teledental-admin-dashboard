@@ -6,7 +6,7 @@ export const handleError = (error: any) => {
   // Handle ApiError instances
   if (error instanceof ApiError) {
     return NextResponse.json(
-      { success: false, message: error.message, details: error.details },
+      { success: false, message: error.message, status: error.statusCode, details: error.details },
       { status: error.statusCode },
     );
   }
@@ -19,14 +19,14 @@ export const handleError = (error: any) => {
     //   .join('; ');
 
     return NextResponse.json(
-      { success: false, message: errors || 'Validation failed' },
+      { success: false, message: errors || 'Validation failed', status: 400 },
       { status: 400 },
     );
   }
 
   // Default error handling
   return NextResponse.json(
-    { success: false, message: error.message || 'Internal server error' },
-    { status: error.statusCode || 500 },
+    { success: false, message: error.message || 'Internal server error', status: 500 },
+    { status: 500 },
   );
 };

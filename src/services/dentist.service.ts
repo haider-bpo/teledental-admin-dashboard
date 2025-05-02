@@ -7,9 +7,6 @@ export class DentistService {
   }
 
   static async updateDentist(dentistId: string, updatedData: Partial<Dentist>) {
-    console.log('Updating dentist:', dentistId, 'with data:', updatedData);
-    const dentist = await DentistModel.findByIdAndUpdate(dentistId, updatedData, { new: true });
-    console.log('Updated dentist:', dentist);
-    return dentist;
+    return await DentistModel.findByIdAndUpdate(dentistId, updatedData, { new: true });
   }
 }
