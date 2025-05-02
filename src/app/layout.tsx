@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/providers';
 import NextTopLoader from 'nextjs-toploader';
-import DashboardLayout from './(dashboard)/dashboard-layout';
+import DashboardLayout from './dashboard/layout';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -47,7 +47,7 @@ export default function RootLayout({
             zIndex={1600}
             showAtBottom={false}
           />
-          <DashboardLayout>{children}</DashboardLayout>
+          {children}
         </Providers>
       </body>
     </html>

@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 // import { useLogoutUser, useUser } from "@/features/auth/authSelectors";
 
 const user = {
-  name: 'talha',
+  name: 'John Doe',
 };
 
 function UserNav() {
@@ -23,7 +23,7 @@ function UserNav() {
 
   const signOut = () => {
     // logoutUser();
-    router.push('/signin');
+    router.push('/auth');
   };
 
   return (

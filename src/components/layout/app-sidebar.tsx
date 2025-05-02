@@ -39,18 +39,18 @@ const company = {
 const items = [
   {
     title: 'patients',
-    url: '/patients',
+    url: '/dashboard/patients',
     icon: User,
   },
   {
     title: 'dentists',
-    url: '/dentists',
+    url: '/dashboard/dentists',
     icon: Hospital,
   },
 ];
 
 const user = {
-  name: 'talha',
+  name: 'John Doe',
 };
 
 export function AppSidebar() {
@@ -62,7 +62,7 @@ export function AppSidebar() {
 
   const signOut = () => {
     // logoutUser();
-    router.push('/signin');
+    router.push('/auth');
   };
 
   return (
