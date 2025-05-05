@@ -20,7 +20,7 @@ export function ColumnToggle<TData>({ table }: ColumnToggleProps<TData>) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm" className="h-10">
-          View
+          Filter
           <SlidersHorizontal className="mr-2 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>

@@ -1,104 +1,106 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { HighlightMatch } from '@/components/table/HighlightMatch';
 import { Badge } from '@/components/ui/badge';
 import { Dentist } from '../types';
-import ApprovalStatusCell from './approval-status-cell';
+import { Check, Ellipsis, X } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { Appointment } from '@/features/appointments/types';
+import { DentistActions } from './dentist-actions';
 
 export const dentistsColumns: ColumnDef<Dentist>[] = [
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: 'Dentist Name',
+    cell: ({ row }) => (
+      <div className="font-medium">{`${row.original.firstName} ${row.original.lastName}`}</div>
+    ),
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'contact',
+    header: 'Contact',
+    cell: ({ row }) => (
+      <div className="flex flex-col">
+        <span>{row.original.email}</span>
+        <span>{row.original.contactNumber}</span>
+      </div>
+    ),
+    enableSorting: false,
+  },
+  {
+    accessorKey: 'appointmentsCount',
+    header: '# of App.',
     cell: ({ row }) => {
-      return (
-        <div className="font-medium">{`${row.original.firstName} ${row.original.lastName}`}</div>
-      );
+      // Create a component to use the hook properly
+      const AppointmentCount = () => {
+        const queryClient = useQueryClient();
+        const appointments = queryClient.getQueryData<Appointment[]>(['appointments']) || [];
+
+        const dentistAppointments = appointments.filter(
+          (appointment) => appointment.dentistId === row.original._id,
+        );
+
+        return <span>{dentistAppointments.length || '-'}</span>;
+      };
+
+      return <AppointmentCount />;
     },
     enableSorting: true,
   },
   {
     accessorKey: 'businessName',
-    header: 'Business',
+    header: 'Practice Name',
     cell: ({ row }) => row.original.businessName || '-',
     enableSorting: true,
   },
   {
-    accessorKey: 'email',
-    header: 'Email',
-    cell: ({ row, table }) => {
-      const value = row.original.email;
-      const globalFilter = table.getState().globalFilter;
-      return <HighlightMatch text={value} query={globalFilter || ''} />;
-    },
-    enableSorting: true,
-  },
-  {
-    accessorKey: 'contactNumber',
-    header: 'Contact',
-    cell: ({ row }) => row.original.contactNumber || '-',
-    enableSorting: true,
-  },
-  {
-    accessorKey: 'location',
-    header: 'Location',
+    accessorKey: 'licensedLocations',
+    header: 'Licensed Locations',
     cell: ({ row }) => {
-      const loc = row.original.location;
-      return `${loc.city}, ${loc.state}`;
+      const licenses = row.original.directOnboardingDetails?.licenses || [];
+      const states = licenses.map((l) => l.state).filter(Boolean);
+      return states.length ? states.join(', ') : '-';
     },
-    enableSorting: true,
+    enableSorting: false,
   },
-  // {
-  //   accessorKey: 'specialities',
-  //   header: 'Specialties',
-  //   cell: ({ row }) => {
-  //     const specialties = row.original?.specialities;
-  //     return (
-  //       <div className="flex flex-wrap gap-1">
-  //         {specialties?.slice(0, 2).map((specialty, index) => (
-  //           <Badge key={index} variant="secondary">
-  //             {specialty}
-  //           </Badge>
-  //         ))}
-  //         {specialties?.length > 2 && (
-  //           <Badge variant="outline">+{specialties.length - 2} more</Badge>
-  //         )}
-  //       </div>
-  //     );
-  //   },
-  //   enableSorting: true,
-  // },
   {
     accessorKey: 'status',
     header: 'Status',
     cell: ({ row }) => {
-      const status = row.original?.status;
-      return (
-        <Badge
-          variant={
-            status === 'active' ? 'default' : status === 'inactive' ? 'secondary' : 'destructive'
-          }
-        >
-          {status?.charAt(0).toUpperCase() + status?.slice(1)}
-        </Badge>
-      );
+      // Status icon: Approved (check), Pending (dots), Rejected (cross)
+      const approval = row.original.isApproved;
+      const verified = row.original.isVerified;
+      let icon = null;
+      if (approval) {
+        icon = <Check className="text-2xl text-green-500" />;
+      } else if (!approval && verified === false) {
+        icon = <X className="text-2xl text-red-500" />;
+      } else {
+        icon = <Ellipsis className="text-2xl text-yellow-500" />;
+      }
+      return <span className="flex justify-center">{icon}</span>;
     },
-    enableSorting: true,
+    enableSorting: false,
   },
   {
-    accessorKey: 'isVerified',
-    header: 'Verified',
-    cell: ({ row }) => {
-      return row.original.isVerified ? (
-        <Badge variant="default">Verified</Badge>
-      ) : (
-        <Badge variant="secondary">Pending</Badge>
-      );
-    },
-    enableSorting: true,
-  },
-  {
-    accessorKey: 'isApproved',
+    accessorKey: 'approval',
     header: 'Approval',
-    cell: ({ row }) => <ApprovalStatusCell dentist={row.original} />,
-    enableSorting: true,
+    cell: ({ row }) => {
+      const approval = row.original.isApproved;
+      const verified = row.original.isVerified;
+      if (approval) {
+        return <Badge className="w-25 bg-green-500 px-4 py-[.3rem] font-semibold">Approved</Badge>;
+      } else if (!approval && verified === false) {
+        return <Badge className="w-25 bg-red-500 px-4 py-[.3rem] font-semibold">Rejected</Badge>;
+      } else {
+        return <Badge className="w-25 bg-yellow-500 px-4 py-[.3rem] font-semibold">Pending</Badge>;
+      }
+    },
+    enableSorting: false,
+  },
+  {
+    id: 'actions',
+    header: 'Actions',
+    cell: ({ row }) => <DentistActions row={row} />,
+    enableSorting: false,
   },
 ];
