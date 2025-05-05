@@ -1,21 +1,34 @@
-import { useId } from 'react';
+'use client';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from '@/components/ui/card';
+import { Card, CardHeader, CardDescription, CardContent } from '@/components/ui/card';
+import { Form } from '@/components/ui/form';
 import Image from 'next/image';
+import { FormInput } from '@/components/inputs';
+import { useSigninAdmin } from '@/features/auth/hooks/use-signin-admin';
+import { Loader2 } from 'lucide-react';
+import { signinSchema, SigninSchemaType } from '@/features/auth/auth.schema';
 
 export default function SignIn() {
-  const id = useId();
+  const form = useForm<SigninSchemaType>({
+    resolver: zodResolver(signinSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const { mutate: signIn, isPending } = useSigninAdmin();
+
+  function onSubmit(data: SigninSchemaType) {
+    console.log('data', data);
+    signIn(data);
+  }
+
   return (
     <div className="bg-background flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-md">
@@ -23,52 +36,36 @@ export default function SignIn() {
           <div className="flex justify-center">
             <Image src="/images/logo-with-text.png" alt="logo" width={300} height={300} />
           </div>
-          {/* <CardTitle className="text-center text-2xl">Welcome back</CardTitle> */}
           <CardDescription className="text-center">
             Enter your credentials to login to your account.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-5">
-            <div className="space-y-4">
-              <div className="*:not-first:mt-2">
-                <Label htmlFor={`${id}-email`}>Email</Label>
-                <Input id={`${id}-email`} placeholder="hi@yourcompany.com" type="email" required />
-              </div>
-              <div className="*:not-first:mt-2">
-                <Label htmlFor={`${id}-password`}>Password</Label>
-                <Input
-                  id={`${id}-password`}
-                  placeholder="Enter your password"
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+              <div className="space-y-4">
+                <FormInput name="email" label="Email" type="email" required disabled={isPending} />
+                <FormInput
+                  name="password"
+                  label="Password"
                   type="password"
                   required
+                  disabled={isPending}
                 />
               </div>
-            </div>
-            {/* <div className="flex justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <Checkbox id={`${id}-remember`} />
-                <Label htmlFor={`${id}-remember`} className="text-muted-foreground font-normal">
-                  Remember me
-                </Label>
-              </div>
-              <a className="text-sm underline hover:no-underline" href="#">
-                Forgot password?
-              </a>
-            </div> */}
-            <Button type="button" className="mt-5 w-full">
-              Sign in
-            </Button>
-          </form>
+
+              <Button type="submit" className="mt-5 w-full" disabled={isPending}>
+                {isPending ? (
+                  <>
+                    Signing in... <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                  </>
+                ) : (
+                  'Sign in'
+                )}
+              </Button>
+            </form>
+          </Form>
         </CardContent>
-        {/* <CardFooter className="flex flex-col gap-4">
-          <div className="before:bg-border after:bg-border flex items-center gap-3 before:h-px before:flex-1 after:h-px after:flex-1">
-            <span className="text-muted-foreground text-xs">Or</span>
-          </div>
-          <Button variant="outline" className="w-full">
-            Login with Google
-          </Button>
-        </CardFooter> */}
       </Card>
     </div>
   );

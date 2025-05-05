@@ -15,7 +15,6 @@ export const updateDentist = async ({
   id,
   updatedData,
 }: UpdateDentistParams): Promise<ApiResponse> => {
-  // const { data } = await api.patch<ApiResponse>(`/dentists`, { id, updatedData });
   const { data } = await api.patch<ApiResponse>(`/dentists/${id}`, updatedData);
   return data;
 };
