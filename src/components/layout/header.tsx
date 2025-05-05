@@ -46,13 +46,15 @@ export default function Header() {
       <div className="flex items-center gap-2 px-4">
         <SidebarTrigger className="-ml-1 lg:hidden" />
         <Separator orientation="vertical" className="mr-2 h-4 lg:hidden" />
-        <Image
-          src={company.logo}
-          alt={company.name}
-          className="hidden lg:block"
-          width={200}
-          height={200}
-        />
+        <Link href="/">
+          <Image
+            src={company.logo}
+            alt={company.name}
+            className="hidden lg:block"
+            width={200}
+            height={200}
+          />
+        </Link>
       </div>
 
       <div className="flex items-center gap-2 px-4">
