@@ -6,7 +6,9 @@ import { ReactNode } from 'react';
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider defaultOpen={true}>
-      <AppSidebar />
+      <div className="lg:hidden">
+        <AppSidebar />
+      </div>
       <main className="h-full w-full">
         <SidebarInset>
           <Header />

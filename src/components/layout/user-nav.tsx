@@ -29,10 +29,12 @@ function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-9 w-9">
+        <Button variant="ghost" className="relative h-8 w-50 rounded-full">
+          <Avatar className="h-9 w-50">
             <AvatarImage src={''} alt={user?.name ?? ''} />
-            <AvatarFallback className="capitalize">{user?.name?.[0]}</AvatarFallback>
+            <AvatarFallback className="bg-brand-primary text-white capitalize font-semibold hover:bg-white hover:text-brand-primary transition-colors hover:cursor-pointer hover:shadow-lg hover:shadow-brand-primary/50 hover:border-2 hover:border-brand-primary">
+              Welcome {user?.name}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>

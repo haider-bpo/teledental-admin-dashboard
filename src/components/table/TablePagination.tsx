@@ -22,8 +22,8 @@ export function TablePagination({
   return (
     <div className="flex flex-col-reverse gap-4 px-2 sm:flex-row sm:items-center sm:justify-between">
       <div className="text-muted-foreground text-sm">
-        {table.getFilteredSelectedRowModel().rows.length} of{' '}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+        {/* {table.getFilteredSelectedRowModel().rows.length} of{' '}
+        {table.getFilteredRowModel().rows.length} row(s) selected. */}
       </div>
       <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:gap-6 lg:gap-8">
         <div className="flex items-center space-x-2 text-sm">

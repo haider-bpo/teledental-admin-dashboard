@@ -94,7 +94,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild isActive={pathname === item.url}>
                     <Link
                       href={item.url}
-                      className={`${pathname === item.url ? '!text-[#005BEA]' : ''}`}
+                      className={`${pathname === item.url ? '!text-brand-primary' : ''}`}
                     >
                       <item.icon />
                       <span className="py-2 capitalize">{item.title}</span>

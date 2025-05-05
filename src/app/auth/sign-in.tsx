@@ -12,6 +12,7 @@ import {
   CardContent,
   CardFooter,
 } from '@/components/ui/card';
+import Image from 'next/image';
 
 export default function SignIn() {
   const id = useId();
@@ -20,23 +21,9 @@ export default function SignIn() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-2">
           <div className="flex justify-center">
-            <div
-              className="flex size-11 shrink-0 items-center justify-center rounded-full border"
-              aria-hidden="true"
-            >
-              <svg
-                className="stroke-zinc-800 dark:stroke-zinc-100"
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 32 32"
-                aria-hidden="true"
-              >
-                <circle cx="16" cy="16" r="12" fill="none" strokeWidth="8" />
-              </svg>
-            </div>
+            <Image src="/images/logo-with-text.png" alt="logo" width={300} height={300} />
           </div>
-          <CardTitle className="text-center text-2xl">Welcome back</CardTitle>
+          {/* <CardTitle className="text-center text-2xl">Welcome back</CardTitle> */}
           <CardDescription className="text-center">
             Enter your credentials to login to your account.
           </CardDescription>
@@ -58,7 +45,7 @@ export default function SignIn() {
                 />
               </div>
             </div>
-            <div className="flex justify-between gap-2">
+            {/* <div className="flex justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Checkbox id={`${id}-remember`} />
                 <Label htmlFor={`${id}-remember`} className="text-muted-foreground font-normal">
@@ -68,20 +55,20 @@ export default function SignIn() {
               <a className="text-sm underline hover:no-underline" href="#">
                 Forgot password?
               </a>
-            </div>
-            <Button type="button" className="w-full">
+            </div> */}
+            <Button type="button" className="mt-5 w-full">
               Sign in
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex flex-col gap-4">
+        {/* <CardFooter className="flex flex-col gap-4">
           <div className="before:bg-border after:bg-border flex items-center gap-3 before:h-px before:flex-1 after:h-px after:flex-1">
             <span className="text-muted-foreground text-xs">Or</span>
           </div>
           <Button variant="outline" className="w-full">
             Login with Google
           </Button>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );
