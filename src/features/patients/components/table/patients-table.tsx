@@ -3,9 +3,8 @@
 import { Row } from '@tanstack/react-table';
 import { DataTable } from '@/components/table/DataTable';
 import { patientsColumns } from './patients-columns';
-import { Patient } from '../types';
-import { usePatients } from '../hooks/use-patients';
-
+import { Patient } from '../../types';
+import { usePatients } from '../../hooks/use-patients';
 
 export function PatientsTable() {
   const { data: patients, isLoading } = usePatients();

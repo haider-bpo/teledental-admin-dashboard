@@ -1,5 +1,5 @@
 import React from 'react';
-import { DentistsTable } from '../../../features/dentists/components/dentists-table';
+import { DentistsTable } from '../../../features/dentists/components/table/dentists-table';
 
 function Dentists() {
   return (

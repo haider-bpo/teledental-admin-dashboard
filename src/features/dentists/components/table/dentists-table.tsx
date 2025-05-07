@@ -2,9 +2,9 @@
 
 import { Row } from '@tanstack/react-table';
 import { DataTable } from '@/components/table/DataTable';
+import { Dentist } from '../../types';
+import { useDentists } from '../../hooks/use-dentists';
 import { dentistsColumns } from './dentists-columns';
-import { Dentist } from '../types';
-import { useDentists } from '../hooks/use-dentists';
 
 export function DentistsTable() {
   const { data: dentists, isLoading } = useDentists();

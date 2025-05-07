@@ -2,9 +2,9 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
 import { Check, X } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
-import { Patient } from '../types';
+import { Patient } from '../../types';
 import { Appointment } from '@/features/appointments/types';
-import { PatientActions } from './patient-actions';
+import PatientActions from './patient-actions';
 
 export const patientsColumns: ColumnDef<Patient>[] = [
   {

@@ -26,4 +26,8 @@ export type Patient = {
   createdAt: string;
   updatedAt: string;
   __v: number;
+  gender?: 'male' | 'female' | 'other';
+  status?: 'active' | 'inactive' | 'suspended';
 };
+
+export type PartialPatientType = Partial<Patient>;

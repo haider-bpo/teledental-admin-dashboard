@@ -3,7 +3,7 @@ export type Dentist = {
   firstName: string;
   lastName: string;
   location: {
-    type: 'Point';
+    type: string;
     coordinates: number[];
     address: string;
     city: string;

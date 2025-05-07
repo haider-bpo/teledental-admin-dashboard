@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
-import { Dentist } from '../types';
+import { Dentist } from '../../types';
 import { Check, Ellipsis, X } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Appointment } from '@/features/appointments/types';
