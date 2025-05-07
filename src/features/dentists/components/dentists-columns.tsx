@@ -39,7 +39,7 @@ export const dentistsColumns: ColumnDef<Dentist>[] = [
           (appointment) => appointment.dentistId === row.original._id,
         );
 
-        return <span>{dentistAppointments.length || '-'}</span>;
+        return <span>{dentistAppointments.length || 0}</span>;
       };
 
       return <AppointmentCount />;

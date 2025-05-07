@@ -12,7 +12,7 @@ const company = {
   name: 'Teledental',
   logo: '/images/logo-with-text.png',
   smallLogo: '/images/logo.png',
-  plan: 'Manage bussines',
+  plan: 'Manage business',
 };
 
 // Menu items
@@ -21,20 +21,22 @@ const items = [
     title: 'dentists',
     url: '/dashboard/dentists',
     icon: Hospital,
-    // logoImage: '/images/dentist-logo.png',
-    // activeLogoImage: '/images/dentist-logo-active.png',
+    logoImage: '',
+    activeLogoImage: '',
   },
   {
     title: 'patients',
     url: '/dashboard/patients',
     icon: User,
     logoImage: '',
+    activeLogoImage: '',
   },
   {
     title: 'appointments',
     url: '/dashboard/appointments',
     icon: Calendar,
     logoImage: '',
+    activeLogoImage: '',
   },
 ];
 
@@ -69,8 +71,8 @@ export default function Header() {
                 <Image
                   src={
                     pathname === item.url && item.activeLogoImage
-                      ? item.activeLogoImage
-                      : item.logoImage
+                      ? item?.activeLogoImage
+                      : item?.logoImage
                   }
                   alt={item.title}
                   width={16}
