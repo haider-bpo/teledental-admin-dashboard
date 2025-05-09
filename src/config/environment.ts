@@ -1,4 +1,4 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 export const MONGODB_URI = process.env.MONGODB_URI!;
 export const JWTSECRET = process.env.JWTSECRET!;
 export const HASH_ALGO = process.env.HASH_ALGO! || 'sha256';

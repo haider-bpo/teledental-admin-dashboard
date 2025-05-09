@@ -3,8 +3,8 @@
 import { Row } from '@tanstack/react-table';
 import { DataTable } from '@/components/table/DataTable';
 import { appointmentsColumns } from './appointments-columns';
-import { Appointment } from '../types';
-import { useAppointments } from '../hooks/use-appointments';
+import { Appointment } from '../../types';
+import { useAppointments } from '../../hooks/use-appointments';
 
 export function AppointmentsTable() {
   const { data: appointments, isLoading } = useAppointments();

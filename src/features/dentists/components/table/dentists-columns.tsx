@@ -5,6 +5,7 @@ import { Check, Ellipsis, X } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { Appointment } from '@/features/appointments/types';
 import { DentistActions } from './dentist-actions';
+import { queryKeys } from '@/utils/query-keys';
 
 export const dentistsColumns: ColumnDef<Dentist>[] = [
   {
@@ -33,7 +34,7 @@ export const dentistsColumns: ColumnDef<Dentist>[] = [
       // Create a component to use the hook properly
       const AppointmentCount = () => {
         const queryClient = useQueryClient();
-        const appointments = queryClient.getQueryData<Appointment[]>(['appointments']) || [];
+        const appointments = queryClient.getQueryData<Appointment[]>(queryKeys.appointments) || [];
 
         const dentistAppointments = appointments.filter(
           (appointment) => appointment.dentistId === row.original._id,

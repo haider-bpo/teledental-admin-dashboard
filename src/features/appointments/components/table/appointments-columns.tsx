@@ -1,6 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
-import { Appointment } from '../types';
+import { Appointment } from '../../types';
 import { AppointmentActions } from './appointment-actions';
 
 export const appointmentsColumns: ColumnDef<Appointment>[] = [
@@ -17,19 +17,24 @@ export const appointmentsColumns: ColumnDef<Appointment>[] = [
       <div>
         {new Date(row.original.appointmentDate).toLocaleDateString('en-US', {
           month: 'long',
-          day: 'numeric', 
-          year: 'numeric'
+          day: 'numeric',
+          year: 'numeric',
         })}
         <br />
         {new Date(row.original.appointmentDate).toLocaleTimeString('en-US', {
           hour: 'numeric',
           minute: '2-digit',
-          hour12: true
-        })} - {new Date(new Date(row.original.appointmentDate).getTime() + 15*60000).toLocaleTimeString('en-US', {
-          hour: 'numeric', 
-          minute: '2-digit',
-          hour12: true
-        })}
+          hour12: true,
+        })}{' '}
+        -{' '}
+        {new Date(new Date(row.original.appointmentDate).getTime() + 15 * 60000).toLocaleTimeString(
+          'en-US',
+          {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+          },
+        )}
       </div>
     ),
     enableSorting: true,

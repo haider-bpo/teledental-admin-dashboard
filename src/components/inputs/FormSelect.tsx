@@ -11,17 +11,16 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-interface Option {
+interface Option<T = string> {
   label: string;
-  value: string;
+  value: T;
 }
 
-interface FormSelectProps {
+interface FormSelectProps<T = string> {
   name: string;
   label: string;
-  options: Option[];
+  options: Option<T>[];
   placeholder?: string;
-  validation?: z.ZodType<any>;
   required?: boolean;
   disabled?: boolean;
 }
@@ -30,16 +29,28 @@ export const formSelectSchema = z.object({
   select: z.string().min(1, 'Please select an option'),
 });
 
-export function FormSelect({
+export function FormSelect<T = string>({
   name,
   label,
   options,
   placeholder = 'Select an option',
-  validation,
   required = false,
   disabled = false,
-}: FormSelectProps) {
+}: FormSelectProps<T>) {
   const form = useFormContext();
+
+  const handleValueChange = (value: string) => {
+    // Convert string values to appropriate types
+    let convertedValue: T;
+    if (typeof options[0]?.value === 'boolean') {
+      convertedValue = (value === 'true') as T;
+    } else if (typeof options[0]?.value === 'number') {
+      convertedValue = Number(value) as T;
+    } else {
+      convertedValue = value as T;
+    }
+    form.setValue(name, convertedValue);
+  };
 
   return (
     <FormField
@@ -51,7 +62,7 @@ export function FormSelect({
             {label}
             {required && <span className="text-destructive ml-1">*</span>}
           </FormLabel>
-          <Select onValueChange={field.onChange} defaultValue={field.value} disabled={disabled}>
+          <Select onValueChange={handleValueChange} value={String(field.value)} disabled={disabled}>
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />
@@ -59,7 +70,7 @@ export function FormSelect({
             </FormControl>
             <SelectContent>
               {options.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
+                <SelectItem key={String(option.value)} value={String(option.value)}>
                   {option.label}
                 </SelectItem>
               ))}
